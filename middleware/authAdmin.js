@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) =>{
     try{
-        const token = req.header("x-auth-token");
+        const token = req.header("x-auth-admin-token");
         if(!token){
             return res.status(401).json({msg: "no authentication token , autherization denied"});
         }
@@ -11,7 +11,7 @@ const auth = (req, res, next) =>{
         if(!verified){
             return res.status(401).json({msg: "token verification failed , autherization denied"});
         }
-        req.user = verified.id;
+        req.admin = verified.id;
         next();
     }
     catch(err){
