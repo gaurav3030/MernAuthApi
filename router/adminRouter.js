@@ -105,6 +105,6 @@ router.get("/",auth , async (req,res)=>{
         id: admin._id,
     });
 });
-
+router.use('/products', require('./productRouter'));
 
 module.exports = router;

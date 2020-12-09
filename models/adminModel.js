@@ -5,4 +5,4 @@ const adminSchema = new mongoose.Schema({
     displayName: { type: String , required:true},
 });
 
-module.exports = User = mongoose.model("admin",adminSchema);
+module.exports = Admin = mongoose.model("admin",adminSchema);
