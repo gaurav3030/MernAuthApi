@@ -32,3 +32,4 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING ,
 app.use("/users",require("./router/userRouter"));
 app.use("/admin",require("./router/adminRouter"));
 
+app.use(express.static('public'));

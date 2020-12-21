@@ -4,7 +4,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination:function(req,file,cb){
-        cb(null,'./productImages/');
+        cb(null,'./public/productImages/');
     },
     filename: function(req,file,cb){
         cb(null,Date.now()+file.originalname);
@@ -32,7 +32,9 @@ router.route("/add").post(upload.single('imageData'),(req,res,next)=>{
         
         const {productName,productDescription,productPrice,productQuantity} = req.body;
         const imageName=req.body.imageName;
-        const imageData = req.file.path;
+        var imageData = req.file.path;
+        imageData = imageData.replace(/\\/g,"/");
+        imageData = imageData.slice(7);
         if(!productName || !productDescription || !productPrice || !productQuantity || !imageName || !imageData){
             return res.status(400).json({msg: "Enter all Fields "});
         }
@@ -57,9 +59,18 @@ router.route("/add").post(upload.single('imageData'),(req,res,next)=>{
         
 
     }catch(err){
+        console.log(err.message);
         res.status(500).json({error:err.message});
     }
 });
 
-
+router.post("/allproducts",async (req,res)=>{
+    
+    try{
+        const allproducts = await Product.find();
+        res.json(allproducts);
+    }catch(err){
+        res.status(500).json({error:err.message});
+    }
+});
 module.exports = router;
